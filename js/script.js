@@ -5,17 +5,7 @@ FSJS project 2 - List Filter and Pagination
 
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
-const studentList = document.getElementsByTagName("li");
+const studentList = document.getElementsByClassName('student-item');
 const numItems = 10;
 
 // console.log(studentList);
@@ -35,8 +25,8 @@ const numItems = 10;
        "invoke" the function 
 ***/
 function showPage(studentList, page) {
-  let startIndex = page * numItems - numItems;
-  let endIndex = page * numItems;
+  const startIndex = page * numItems - numItems;
+  const endIndex = page * numItems;
 
   for (let i = 0; i < studentList.length; i++) {
     if (i >= startIndex && i < endIndex) {
@@ -47,12 +37,8 @@ function showPage(studentList, page) {
   }
 }
 
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
 function appendPageLinks(studentList) {
-  numPages = Math.ceil(studentList.length / numItems);
+  let numPages = Math.ceil(studentList.length / numItems);
   let divTag = document.createElement("div");
   divTag.className = "pagination";
 
@@ -61,35 +47,37 @@ function appendPageLinks(studentList) {
   //console.log(pageTag);
   pageTag.appendChild(divTag);
 
-  let ulTag = document.createElement("ul");
-  divTag.appendChild(ulTag);
+  let ul = document.createElement("ul");
+  divTag.appendChild(ul);
 
-  //create li elements
-  //append li elements to ul
-}
+  for (let l = 1; l <= numPages; l++) {
+    let li = document.createElement("li");
+    let a = document.createElement("a");
+    ul.appendChild(li);
+    li.appendChild(a);
 
-for (l  = 1; l <= numPages; l++) {
-
-let li = document.createElement('li');
-let a = doccument.createElement('a');
-ul.appendChild(li);
-li.appendChild(a);
-
-a.setAttribute("href", "#");
-a.textContent = l;
-   if (l === 1){
+    a.setAttribute("href", "#");
+    a.textContent = l;
+    if (l === 1) {
       a.className = "active";
- }
+    }
 
- 
+    a.addEventListener("click", (event) => {
+      let active = event.target.textContent;
+      let a = document.querySelectorAll("a");
+      showPage(studentList, active);
+
+      for (let k = 0; k < a.length; k++) {
+
+        a[k].classList.remove("active");
+      }
+
+      event.target.className = "active";
+    });
+  }
 }
-
-
-
-
-
-
 showPage(studentList, 1);
-
 appendPageLinks(studentList);
+
+
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
