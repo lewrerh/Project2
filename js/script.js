@@ -23,7 +23,7 @@ function showPage(studentList, page) {
     }
   }
 }
-//this funtion does the math to create the pagination to work properly
+//this funtion does the math to create the pagination buttons to work properly
 function appendPageLinks(studentList) {
   let numPages = Math.ceil(studentList.length / numItems);
   let divTag = document.createElement("div");
@@ -50,12 +50,11 @@ function appendPageLinks(studentList) {
     }
     //event lister is set to each tag and when clicked to show page and removed by for loop
     a.addEventListener("click", (event) => {
-      let active = event.target.textContent;
+      let nextPage = event.target.textContent;
       let a = document.querySelectorAll("a");
-      showPage(studentList, active);
+      showPage(studentList, nextPage);
 
       for (let k = 0; k < a.length; k++) {
-
         a[k].classList.remove("active");
       }
       //event target set to active status allowing the completion of the process
