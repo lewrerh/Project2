@@ -4,30 +4,17 @@ FSJS project 2 - List Filter and Pagination
 ******************************************/
 
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
-
+//Global variables created
 const studentList = document.getElementsByClassName('student-item');
 const numItems = 10;
 
 // console.log(studentList);
 
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
+//Function created with two arguments & variable created for start & end Index
 function showPage(studentList, page) {
   const startIndex = page * numItems - numItems;
   const endIndex = page * numItems;
-
+//loop will run once to show and hide student list
   for (let i = 0; i < studentList.length; i++) {
     if (i >= startIndex && i < endIndex) {
       studentList[i].style.display = "block";
@@ -36,7 +23,7 @@ function showPage(studentList, page) {
     }
   }
 }
-
+//this funtion does the math to create the pagination to work properly
 function appendPageLinks(studentList) {
   let numPages = Math.ceil(studentList.length / numItems);
   let divTag = document.createElement("div");
@@ -49,7 +36,7 @@ function appendPageLinks(studentList) {
 
   let ul = document.createElement("ul");
   divTag.appendChild(ul);
-
+   //for loop will create and append my pagination links/elements created per decendents
   for (let l = 1; l <= numPages; l++) {
     let li = document.createElement("li");
     let a = document.createElement("a");
@@ -61,7 +48,7 @@ function appendPageLinks(studentList) {
     if (l === 1) {
       a.className = "active";
     }
-
+    //event lister is set to each tag and when clicked to show page and removed by for loop
     a.addEventListener("click", (event) => {
       let active = event.target.textContent;
       let a = document.querySelectorAll("a");
@@ -71,7 +58,7 @@ function appendPageLinks(studentList) {
 
         a[k].classList.remove("active");
       }
-
+      //event target set to active status allowing the completion of the process
       event.target.className = "active";
     });
   }
